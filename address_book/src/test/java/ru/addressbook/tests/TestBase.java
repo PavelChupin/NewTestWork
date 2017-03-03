@@ -13,8 +13,8 @@ public class TestBase {
     protected final Manager manager;
 
 
-    public TestBase(String browers){
-        manager = new Manager(browers);
+    public TestBase(String browserType){
+        manager = new Manager(browserType);
     }
 
     @BeforeMethod

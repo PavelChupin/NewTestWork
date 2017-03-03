@@ -2,6 +2,7 @@ package ru.addressbook.manager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.addressbook.data.LoginData;
@@ -34,5 +35,21 @@ public class BaseHelper {
     public void click(By locator) {
         wd.findElement(locator).click();
     }
+
+
+    public void alertWindowOk() {
+        wd.switchTo().alert().accept();
+    }
+
+    //Метод поиска элемента по локатору
+    public boolean isElementPresent(By locator){
+        try{
+            wd.findElement(locator);
+            return true;
+        }catch(NoSuchElementException ex){
+            return false;
+        }
+    }
+
 
 }

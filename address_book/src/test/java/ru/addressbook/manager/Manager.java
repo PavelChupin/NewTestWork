@@ -20,21 +20,21 @@ public class Manager {
     private NavigationHelper navigationHelper;
     //private BaseHelper baseHelper;
     private ContactHelper contactHelper;
-    private String browers;
+    private String browserType;
 
     WebDriver wd;
 
-    public Manager(String browers) {
-        this.browers = browers;
+    public Manager(String browserType) {
+        this.browserType = browserType;
     }
 
     public void init() {
         //String browers = BrowserType.FIREFOX;
-        if (browers.equals(BrowserType.FIREFOX)){
+        if (browserType.equals(BrowserType.FIREFOX)){
             wd = new FirefoxDriver();
-        }else if (browers.equals(BrowserType.CHROME)){
+        }else if (browserType.equals(BrowserType.CHROME)){
             wd = new ChromeDriver();
-        }else if (browers.equals(BrowserType.IE)){
+        }else if (browserType.equals(BrowserType.IE)){
             wd = new InternetExplorerDriver();
         }
 
@@ -43,8 +43,8 @@ public class Manager {
         wd.get("http://localhost/addressbook/edit.php");
 
         navigationHelper = new NavigationHelper(wd);
-        contactHelper = new ContactHelper(wd);
         buttonHelper = new ButtonHelper(wd);
+        contactHelper = new ContactHelper(wd, navigationHelper, buttonHelper);
 
         //Авторизация
         sessionHelper = new SessionHelper(wd);

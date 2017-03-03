@@ -10,9 +10,14 @@ import ru.addressbook.data.ContactData;
  */
 public class ContactHelper extends BaseHelper{
 
-    public ContactHelper(WebDriver wd) {
+    private NavigationHelper navigationHelper;
+    private ButtonHelper buttonHelper;
 
+
+    public ContactHelper(WebDriver wd, NavigationHelper navigationHelper, ButtonHelper buttonHelper) {
         super(wd);
+        this.navigationHelper = navigationHelper;
+        this.buttonHelper  = buttonHelper;
     }
 
     public void insertContactDataForm(ContactData contactData) {
@@ -71,4 +76,24 @@ public class ContactHelper extends BaseHelper{
         type(By.name("notes"), contactData.getNotes());
     }
 
+   public void insertContact(ContactData contactData) {
+        navigationHelper.gotoHomePage();
+        navigationHelper.gotoAddNew();
+        insertContactDataForm(contactData);
+
+        //Нажатие на кнопку Enter сохранить контакт
+        buttonHelper.buttonSaveContact();
+
+        //Выбор пункта меню вернуться на главную страницу
+        navigationHelper.gotoHomePage();
+    }
+
+    //
+    public boolean isThereSelectObject() {
+        return isElementPresent(By.name("selected[]"));
+    }
+
+    public void selectElement() {
+        click(By.name("selected[]"));
+    }
 }

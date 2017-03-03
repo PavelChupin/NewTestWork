@@ -15,9 +15,12 @@ public class ContactModification extends TestBase{
 
     @Test
     public void modificationContact(){
+        manager.getNavigationHelper().gotoHomePage();
         //Проверим а есть ли контакты для модификации, если нет то добавим контакт
         if (! manager.getContactHelper().isThereSelectObject())
         {
+            manager.getNavigationHelper().gotoHomePage();
+            manager.getNavigationHelper().gotoAddNewPage();
             manager.getContactHelper().insertContact(new ContactData("Pavel", "", "Chupin", "PavelChupin", "", "Y-Solutions", "Novosibirk, B.Bogatkova, 185 - 41", "", "+79137382899", "", "", "pavel.chupin@gmail.com", "", "", "1984", "", "", "", "", "localhost/addressbook"));
         }
 

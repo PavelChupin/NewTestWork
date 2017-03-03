@@ -41,12 +41,19 @@ public class BaseHelper {
         wd.switchTo().alert().accept();
     }
 
-    //Метод поиска элемента по локатору
-    public boolean isElementPresent(By locator){
+    public void selectElement() {
+        click(By.name("selected[]"));
+    }
+
+    public boolean isThereSelectObject() {
+        return isElementPresent(By.name("selected[]"));
+    }
+
+    protected boolean isElementPresent(By locator) {
         try{
             wd.findElement(locator);
             return true;
-        }catch(NoSuchElementException ex){
+        }catch (NoSuchElementException ex){
             return false;
         }
     }

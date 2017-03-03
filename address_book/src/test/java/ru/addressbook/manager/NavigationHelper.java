@@ -13,12 +13,19 @@ public class NavigationHelper extends BaseHelper{
         super(wd);
     }
 
-    public void gotoAddNew() {
+    public void gotoAddNewPage() {
+        if (isElementPresent(By.tagName("h1")) //Если на странице есть элемент заголовок (тег)
+                && wd.findElement(By.tagName("h1")).getText().equals("Edit / add address book entry") //Если значение элемента заголовок равно проверяемому значению
+                && isElementPresent(By.name("submit"))) { /*Если на странице есть кнопка с именем*/
+            return;
+        }
         click(By.linkText("add new"));
     }
 
     public void gotoHomePage() {
-
+        if (isElementPresent(By.id("maintable"))){ //если есть таблица, то это страница Home
+            return;
+        }
         click(By.linkText("home"));
     }
 }

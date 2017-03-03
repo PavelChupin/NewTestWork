@@ -2,7 +2,6 @@ package ru.addressbook.manager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.addressbook.data.ContactData;
 
 /**
@@ -76,9 +75,11 @@ public class ContactHelper extends BaseHelper{
         type(By.name("notes"), contactData.getNotes());
     }
 
+
+
    public void insertContact(ContactData contactData) {
         navigationHelper.gotoHomePage();
-        navigationHelper.gotoAddNew();
+        navigationHelper.gotoAddNewPage();
         insertContactDataForm(contactData);
 
         //Нажатие на кнопку Enter сохранить контакт
@@ -89,11 +90,6 @@ public class ContactHelper extends BaseHelper{
     }
 
     //
-    public boolean isThereSelectObject() {
-        return isElementPresent(By.name("selected[]"));
-    }
 
-    public void selectElement() {
-        click(By.name("selected[]"));
-    }
+
 }

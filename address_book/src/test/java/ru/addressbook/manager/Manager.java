@@ -40,7 +40,7 @@ public class Manager {
 
         wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         //Запуск стартовой страници
-        wd.get("http://localhost/addressbook/edit.php");
+        wd.get("http://localhost/addressbook/");
 
         navigationHelper = new NavigationHelper(wd);
         buttonHelper = new ButtonHelper(wd);

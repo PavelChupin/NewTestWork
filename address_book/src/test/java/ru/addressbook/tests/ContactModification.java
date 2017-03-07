@@ -19,16 +19,13 @@ public class ContactModification extends TestBase{
         //Проверим а есть ли контакты для модификации, если нет то добавим контакт
         if (! manager.getContactHelper().isThereSelectObject())
         {
-            manager.getNavigationHelper().gotoHomePage();
-            manager.getNavigationHelper().gotoAddNewPage();
-            manager.getContactHelper().insertContact(new ContactData("Pavel", "", "Chupin", "PavelChupin", "", "Y-Solutions", "Novosibirk, B.Bogatkova, 185 - 41", "", "+79137382899", "", "", "pavel.chupin@gmail.com", "", "", "1984", "", "", "", "", "localhost/addressbook"));
+            manager.getContactHelper().insertContact(new ContactData("Pavel", "", "Chupin", "PavelChupin", "", "Y-Solutions", "Novosibirk, B.Bogatkova, 185 - 41", "", "+79137382899", "", "", "pavel.chupin@gmail.com", "", "", "1984", "", "", "", "", "localhost/addressbook","HomeGroup"));
         }
-
-        manager.getNavigationHelper().gotoHomePage();
+        //manager.getNavigationHelper().gotoHomePage(); //Закоментировано так как есть про методе insertContact, если не пойдем по if то переход уже сделан в начале метода deletionContact
         manager.getContactHelper().selectElement();
-        manager.getButtonHelper().buttonEdit();
-        manager.getContactHelper().insertContactDataForm(new ContactData("Pavel", "", "Chupin", "PavelChupin", "", "Y-Solutions", "Novosibirk, B.Bogatkova, 185 - 41", "", "+79137382899", "", "", "pavel.chupin@gmail.com", "", "", "1984", "", "", "", "", "localhost/addressbook"));
-        manager.getButtonHelper().buttonUpdate();
+        manager.getButtonHelper().buttonEditContact();
+        manager.getContactHelper().insertContactDataForm(new ContactData("Pavel", "", "Chupin", "PavelChupin", "", "Y-Solutions", "Novosibirk, B.Bogatkova, 185 - 41", "", "+79137382899", "", "", "pavel.chupin@gmail.com", "", "", "1984", "", "", "", "", "localhost/addressbook","HomeGroup"),false);
+        manager.getButtonHelper().buttonUpdateContact();
         manager.getNavigationHelper().gotoHomePage();
     }
 }

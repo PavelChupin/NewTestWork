@@ -2,24 +2,29 @@ package ru.addressbook.manager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import ru.addressbook.data.ContactData;
+import ru.addressbook.data.GroupData;
 
 /**
  * Created by Summoner on 02.03.2017.
  */
-public class ContactHelper extends BaseHelper{
+public class ContactHelper extends BaseHelper {
 
     private NavigationHelper navigationHelper;
     private ButtonHelper buttonHelper;
+    private GroupHelper groupHelper;
 
 
-    public ContactHelper(WebDriver wd, NavigationHelper navigationHelper, ButtonHelper buttonHelper) {
+    public ContactHelper(WebDriver wd, NavigationHelper navigationHelper, ButtonHelper buttonHelper, GroupHelper groupHelper) {
         super(wd);
         this.navigationHelper = navigationHelper;
-        this.buttonHelper  = buttonHelper;
+        this.buttonHelper = buttonHelper;
+        this.groupHelper = groupHelper;
     }
 
-    public void insertContactDataForm(ContactData contactData) {
+    public void insertContactDataForm(ContactData contactData, boolean flag) {
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("middlename"), contactData.getMiddlename());
         type(By.name("lastname"), contactData.getLastname());
@@ -67,20 +72,32 @@ public class ContactHelper extends BaseHelper{
 
         type(By.name("ayear"), contactData.getAyear());
 
-        /*if (!wd.findElement(By.xpath("//div[@id='content']/form/select[5]//option[1]")).isSelected()) {
-            wd.findElement(By.xpath("//div[@id='content']/form/select[5]//option[1]")).click();
-        }*/
+        //Заполним поле группа если передан флаг добавления контакта
+        if(flag){
+            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        }else{//Если не передан, то выполним проверку что бы небыло ошибок/исключения
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
         type(By.name("address2"), contactData.getAddress2());
         type(By.name("phone2"), contactData.getPhone2());
         type(By.name("notes"), contactData.getNotes());
     }
 
-
-
-   public void insertContact(ContactData contactData) {
-        navigationHelper.gotoHomePage();
+    public void insertContact(ContactData contactData) {
+        //navigationHelper.gotoHomePage(); //Не нужен так как переход уже сделан тестами
+        //Нажмем пункт меню Добавить контакт
         navigationHelper.gotoAddNewPage();
-        insertContactDataForm(contactData);
+
+        //Если группа передана, то проверим ее существование и если группы нету, то добавим ее
+        if (contactData.getGroup() != null) {
+            //Поищем группу среди доступных, если не найдена то добавим новую
+            if (findGroup(contactData.getGroup()) != 1) {
+                groupHelper.insertGroup(new GroupData(contactData.getGroup(), contactData.getGroup(), contactData.getGroup()));
+                navigationHelper.gotoAddNewPage();
+            }
+        }
+        //Заполним форму данными контакта
+        insertContactDataForm(contactData,true);
 
         //Нажатие на кнопку Enter сохранить контакт
         buttonHelper.buttonSaveContact();
@@ -89,7 +106,7 @@ public class ContactHelper extends BaseHelper{
         navigationHelper.gotoHomePage();
     }
 
-    //
-
-
 }
+
+
+

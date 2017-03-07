@@ -28,4 +28,22 @@ public class NavigationHelper extends BaseHelper{
         }
         click(By.linkText("home"));
     }
+
+    public void gotoGroupPage() {
+        if (isElementPresent(By.tagName("h1")) //Если на странице есть элемент заголовок (тег)
+                && wd.findElement(By.tagName("h1")).getText().equals("Groups") //Если значение элемента заголовок равно проверяемому значению
+                && isElementPresent(By.name("new"))) { /*Если на странице есть кнопка с именем*/
+            return;
+        }
+        click(By.linkText("groups"));
+    }
+
+    public void gotoGroupToPage() {
+        if (isElementPresent(By.tagName("h1")) //Если на странице есть элемент заголовок (тег)
+                && wd.findElement(By.tagName("h1")).getText().equals("Groups") //Если значение элемента заголовок равно проверяемому значению
+                && isElementPresent(By.name("new"))) { /*Если на странице есть кнопка с именем*/
+            return;
+        }
+        click(By.linkText("group page"));
+    }
 }

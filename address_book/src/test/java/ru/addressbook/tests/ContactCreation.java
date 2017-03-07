@@ -11,10 +11,8 @@ public class ContactCreation extends TestBase{
 
     @Test
     public void creationContact() {
-        //String[] browers = {BrowserType.IE, BrowserType.CHROME, BrowserType.FIREFOX};
-        //for (String s : browers) {
-        manager.getContactHelper().insertContact(new ContactData("Pavel", "", "Chupin", "PavelChupin", "", "Y-Solutions", "Novosibirk, B.Bogatkova, 185 - 41", "", "+79137382899", "", "", "pavel.chupin@gmail.com", "", "", "1984", "", "", "", "", "localhost/addressbook"));
-        //}
+        manager.getNavigationHelper().gotoHomePage();
+        manager.getContactHelper().insertContact(new ContactData("Pavel", "", "Chupin", "PavelChupin", "", "Y-Solutions", "Novosibirk, B.Bogatkova, 185 - 41", "", "+79137382899", "", "", "pavel.chupin@gmail.com", "", "", "1984", "", "", "", "", "localhost/addressbook", "HomeGroup"));
     }
 
 }

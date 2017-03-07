@@ -1,11 +1,10 @@
 package ru.addressbook.manager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.addressbook.data.LoginData;
+
+import java.util.List;
 
 /**
  * Created by Summoner on 02.03.2017.
@@ -28,8 +27,14 @@ public class BaseHelper {
 
     public void type(By locator, String text) {
         click(locator);
-        wd.findElement(locator).clear();
-        wd.findElement(locator).sendKeys(text);
+        //Проверим переданы ли данные для изменения, если не переданы ни чего не меняем
+        if (text != null) {
+            //Проверим переданное значение отличается от уже заполненого, если нет менять ни чего не нужно
+            if (! text.equals(wd.findElement(locator).getAttribute("value"))) {
+                wd.findElement(locator).clear();
+                wd.findElement(locator).sendKeys(text);
+            }
+        }
     }
 
     public void click(By locator) {
@@ -50,13 +55,21 @@ public class BaseHelper {
     }
 
     protected boolean isElementPresent(By locator) {
-        try{
+        try {
             wd.findElement(locator);
             return true;
-        }catch (NoSuchElementException ex){
+        } catch (NoSuchElementException ex) {
             return false;
         }
     }
 
-
+    protected int findGroup(String groupName) {
+        List<WebElement> groups = wd.findElement(By.name("new_group")).findElements(By.tagName("option"));
+        for (WebElement group : groups) {
+            if (group.getText().equals(groupName)) {
+                return 1;
+            }
+        }
+        return 0;
+    }
 }

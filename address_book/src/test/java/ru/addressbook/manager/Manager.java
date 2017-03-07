@@ -18,7 +18,7 @@ public class Manager {
     private ButtonHelper buttonHelper;
     private SessionHelper sessionHelper;
     private NavigationHelper navigationHelper;
-    //private BaseHelper baseHelper;
+    private GroupHelper groupHelper;
     private ContactHelper contactHelper;
     private String browserType;
 
@@ -38,13 +38,16 @@ public class Manager {
             wd = new InternetExplorerDriver();
         }
 
-        wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        wd.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         //Запуск стартовой страници
         wd.get("http://localhost/addressbook/");
 
         navigationHelper = new NavigationHelper(wd);
         buttonHelper = new ButtonHelper(wd);
-        contactHelper = new ContactHelper(wd, navigationHelper, buttonHelper);
+        //Что бы groupHelper мог работать с навигацией и кнопками передадим ему ссылки на эти объекты
+        groupHelper = new GroupHelper(wd, navigationHelper, buttonHelper);
+        //Что бы contactHelper мог работать с навигацией, кнопками и создавать не достающие группы передадим ему ссылки на эти объекты
+        contactHelper = new ContactHelper(wd, navigationHelper, buttonHelper, groupHelper);
 
         //Авторизация
         sessionHelper = new SessionHelper(wd);
@@ -69,5 +72,9 @@ public class Manager {
 
     public ButtonHelper getButtonHelper() {
         return buttonHelper;
+    }
+
+    public GroupHelper getGroupHelper() {
+        return groupHelper;
     }
 }
